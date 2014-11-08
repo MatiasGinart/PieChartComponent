@@ -22,9 +22,9 @@
 		8C9EDDD51A0B142500EAB4D6 /* PieChartItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9EDDD41A0B142500EAB4D6 /* PieChartItemView.m */; };
 		8C9EDDD71A0B146B00EAB4D6 /* PieChartItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8C9EDDD61A0B146B00EAB4D6 /* PieChartItemView.xib */; };
 		8C9EDDDA1A0B17D900EAB4D6 /* PieChartConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C9EDDD91A0B17D900EAB4D6 /* PieChartConfiguration.m */; };
-		8CD837CC1A0D96DE007EDE94 /* PieChartCollectionViewHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CD837CB1A0D96DE007EDE94 /* PieChartCollectionViewHandler.m */; };
-		8CD837D01A0D9B5B007EDE94 /* PieChartCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CD837CE1A0D9B5B007EDE94 /* PieChartCollectionViewCell.m */; };
-		8CD837D11A0D9B5B007EDE94 /* PieChartCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CD837CF1A0D9B5B007EDE94 /* PieChartCollectionViewCell.xib */; };
+		8CD837D01A0D9B5B007EDE94 /* StockView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CD837CE1A0D9B5B007EDE94 /* StockView.m */; };
+		8CD837D11A0D9B5B007EDE94 /* StockView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8CD837CF1A0D9B5B007EDE94 /* StockView.xib */; };
+		8CDD56621A0E6045001FC6F0 /* AllStocksView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8CDD56611A0E6045001FC6F0 /* AllStocksView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,11 +65,11 @@
 		8C9EDDD61A0B146B00EAB4D6 /* PieChartItemView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PieChartItemView.xib; sourceTree = "<group>"; };
 		8C9EDDD81A0B17D900EAB4D6 /* PieChartConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieChartConfiguration.h; sourceTree = "<group>"; };
 		8C9EDDD91A0B17D900EAB4D6 /* PieChartConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieChartConfiguration.m; sourceTree = "<group>"; };
-		8CD837CA1A0D96DE007EDE94 /* PieChartCollectionViewHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieChartCollectionViewHandler.h; sourceTree = "<group>"; };
-		8CD837CB1A0D96DE007EDE94 /* PieChartCollectionViewHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieChartCollectionViewHandler.m; sourceTree = "<group>"; };
-		8CD837CD1A0D9B5B007EDE94 /* PieChartCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieChartCollectionViewCell.h; sourceTree = "<group>"; };
-		8CD837CE1A0D9B5B007EDE94 /* PieChartCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieChartCollectionViewCell.m; sourceTree = "<group>"; };
-		8CD837CF1A0D9B5B007EDE94 /* PieChartCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PieChartCollectionViewCell.xib; sourceTree = "<group>"; };
+		8CD837CD1A0D9B5B007EDE94 /* StockView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StockView.h; sourceTree = "<group>"; };
+		8CD837CE1A0D9B5B007EDE94 /* StockView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StockView.m; sourceTree = "<group>"; };
+		8CD837CF1A0D9B5B007EDE94 /* StockView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = StockView.xib; sourceTree = "<group>"; };
+		8CDD56601A0E6045001FC6F0 /* AllStocksView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllStocksView.h; sourceTree = "<group>"; };
+		8CDD56611A0E6045001FC6F0 /* AllStocksView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllStocksView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,11 +175,11 @@
 		8CD837C91A0D96C3007EDE94 /* CollectionView */ = {
 			isa = PBXGroup;
 			children = (
-				8CD837CA1A0D96DE007EDE94 /* PieChartCollectionViewHandler.h */,
-				8CD837CB1A0D96DE007EDE94 /* PieChartCollectionViewHandler.m */,
-				8CD837CD1A0D9B5B007EDE94 /* PieChartCollectionViewCell.h */,
-				8CD837CE1A0D9B5B007EDE94 /* PieChartCollectionViewCell.m */,
-				8CD837CF1A0D9B5B007EDE94 /* PieChartCollectionViewCell.xib */,
+				8CDD56601A0E6045001FC6F0 /* AllStocksView.h */,
+				8CDD56611A0E6045001FC6F0 /* AllStocksView.m */,
+				8CD837CD1A0D9B5B007EDE94 /* StockView.h */,
+				8CD837CE1A0D9B5B007EDE94 /* StockView.m */,
+				8CD837CF1A0D9B5B007EDE94 /* StockView.xib */,
 			);
 			name = CollectionView;
 			sourceTree = "<group>";
@@ -264,7 +264,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8CD837D11A0D9B5B007EDE94 /* PieChartCollectionViewCell.xib in Resources */,
+				8CD837D11A0D9B5B007EDE94 /* StockView.xib in Resources */,
 				8C9EDDCC1A0B0F4700EAB4D6 /* PieChartComponentView.xib in Resources */,
 				8C9EDDD71A0B146B00EAB4D6 /* PieChartItemView.xib in Resources */,
 				8C9EDDA71A0B0D3D00EAB4D6 /* Main.storyboard in Resources */,
@@ -289,15 +289,15 @@
 			files = (
 				8C9EDDA41A0B0D3D00EAB4D6 /* ViewController.m in Sources */,
 				8C9EDDD21A0B141700EAB4D6 /* PieChartItemsInformationScrollView.m in Sources */,
-				8CD837D01A0D9B5B007EDE94 /* PieChartCollectionViewCell.m in Sources */,
+				8CD837D01A0D9B5B007EDE94 /* StockView.m in Sources */,
 				8C9EDDA11A0B0D3D00EAB4D6 /* AppDelegate.m in Sources */,
 				8C9EDDCF1A0B112100EAB4D6 /* PieChartView.m in Sources */,
 				8C9EDDDA1A0B17D900EAB4D6 /* PieChartConfiguration.m in Sources */,
 				8C9EDDC41A0B0D5300EAB4D6 /* PieChartItem.m in Sources */,
 				8C9EDD9E1A0B0D3D00EAB4D6 /* main.m in Sources */,
 				8C9EDDCA1A0B0F3900EAB4D6 /* PieChartComponentView.m in Sources */,
+				8CDD56621A0E6045001FC6F0 /* AllStocksView.m in Sources */,
 				8C9EDDD51A0B142500EAB4D6 /* PieChartItemView.m in Sources */,
-				8CD837CC1A0D96DE007EDE94 /* PieChartCollectionViewHandler.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

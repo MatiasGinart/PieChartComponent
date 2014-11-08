@@ -13,7 +13,7 @@
 + (NSArray*)mock {
     return @[
              [self itemWithTitle:@"Technology" stocks:@[@"MSFT", @"GOOG", @"FB", @"TW", @"AMZN", @"EBAY", @"WING", @"ALIN", @"ALE", @"RAUL"] percentage:0.25],
-             [self itemWithTitle:@"Health" stocks:@[@"MSFT", @"GOOG", @"FB", @"TW", @"AMZN", @"EBAY", @"WING", @"ALIN", @"ALE", @"RAUL"] percentage:0.25],
+             [self itemWithTitle:@"Health" stocks:@[@"MSFT", @"GOOG", @"FB", @"TW", @"AMZN", @"EBAY", @"WING", @"ALIN", @"ALE", @"RAUL", @"MSFT", @"GOOG", @"FB", @"TW", @"AMZN", @"EBAY", @"WING", @"ALIN", @"ALE", @"RAUL"] percentage:0.25],
              [self itemWithTitle:@"Industry" stocks:@[@"MSFT", @"GOOG", @"FB", @"TW", @"AMZN", @"EBAY", @"WING", @"ALIN", @"ALE", @"RAUL"] percentage:0.25],
              [self itemWithTitle:@"Mongo" stocks:@[@"MSFT", @"GOOG", @"FB", @"TW", @"AMZN", @"EBAY", @"WING", @"ALIN", @"ALE", @"RAUL"] percentage:0.25]
              ];

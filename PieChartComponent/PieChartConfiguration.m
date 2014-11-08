@@ -15,7 +15,7 @@
     static PieChartConfiguration* sharedInstance;
     dispatch_once(&once, ^{
         sharedInstance = [[self alloc] init];
-        sharedInstance.topViewColor = [UIColor colorWithRed:211.f/255.f green:220.f/255.f blue:238.f/255.f alpha:1];
+        sharedInstance.topViewColor = [UIColor colorWithRed:211.f/255.f green:227.f/255.f blue:238.f/255.f alpha:1];
         sharedInstance.topTextColor = [UIColor colorWithRed:103.f/255.f green:119.f/255.f blue:138.f/255.f alpha:1];
         sharedInstance.topTextFont = [UIFont systemFontOfSize:17.f];
         sharedInstance.componentColors = @[
@@ -26,13 +26,13 @@
                                            ];
         sharedInstance.itemTitleColor = [UIColor grayColor];
         sharedInstance.selectedItemTitleColor = [UIColor colorWithRed:46.f/255.f green:77.f/255.f blue:105.f/255.f alpha:1];
-        sharedInstance.itemTitleFont = [UIFont systemFontOfSize:17.f];
+        sharedInstance.itemTitleFont = [UIFont systemFontOfSize:20.f];
         sharedInstance.itemPercentageColor = [UIColor grayColor];
         sharedInstance.itemPercentageFont = [UIFont systemFontOfSize:17.f];
-        sharedInstance.itemSectorsColor = [UIColor yellowColor];
-        sharedInstance.itemMoreSectorsColor = [UIColor brownColor];
-        sharedInstance.itemSectorsTextColor = [UIColor lightGrayColor];
-        sharedInstance.itemSectorsTextFont = [UIFont systemFontOfSize:17.f];
+        sharedInstance.itemSectorsColor = [UIColor colorWithRed:144.f/255.f green:157.f/255.f blue:171.f/255.f alpha:1];
+        sharedInstance.itemMoreSectorsColor = [UIColor colorWithRed:41.f/255.f green:79.f/255.f blue:206.f/255.f alpha:1];
+        sharedInstance.itemSectorsTextColor = [UIColor whiteColor];
+        sharedInstance.itemSectorsTextFont = [UIFont systemFontOfSize:12.f];
     });
     return sharedInstance;
 }

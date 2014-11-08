@@ -7,7 +7,7 @@
 //
 
 #import "PieChartComponentView.h"
-#import "PieChartCollectionViewHandler.h"
+#import "AllStocksView.h"
 
 @interface PieChartComponentView()
 
@@ -17,8 +17,7 @@
 @property (nonatomic, weak) IBOutlet PieChartView* pieChartView;
 @property (nonatomic, weak) IBOutlet UILabel* itemTitleLabel;
 @property (nonatomic, weak) IBOutlet UILabel* itemPercentageLabel;
-@property (nonatomic, weak) IBOutlet UICollectionView* collectionView;
-@property (nonatomic, strong) PieChartCollectionViewHandler* collectionViewHandler;
+@property (nonatomic, weak) IBOutlet AllStocksView* allStocksView;
 
 @end
 
@@ -29,20 +28,8 @@
     return objectToReturn;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        self.collectionViewHandler = [[PieChartCollectionViewHandler alloc] init];
-    }
-    return self;
-}
-
 - (void)awakeFromNib {
     [super awakeFromNib];
-    [self.collectionView registerNib:[UINib nibWithNibName:@"PieChartCollectionViewCell" bundle:[NSBundle mainBundle]] forCellWithReuseIdentifier:kPieChartComponentView];
-    self.collectionView.delegate = self.collectionViewHandler;
-    self.collectionView.dataSource = self.collectionViewHandler;
-    self.collectionView.collectionViewLayout = self.collectionViewHandler;
 
     if (self.pieChartConfiguration) {
         [self configureWithPieChartConfiguration];
@@ -65,8 +52,8 @@
 }
 
 - (void)configureWithPieChartConfiguration {
-    self.collectionViewHandler.pieChartConfiguration = self.pieChartConfiguration;
     self.componentsScrollView.configuration = self.pieChartConfiguration;
+    self.allStocksView.configuration = self.pieChartConfiguration;
 
     self.topView.backgroundColor = self.pieChartConfiguration.topViewColor;
     self.pieChartComponentTitleLabel.textColor = self.pieChartConfiguration.topTextColor;
@@ -76,15 +63,17 @@
     self.itemTitleLabel.textColor = self.pieChartConfiguration.selectedItemTitleColor;
     self.itemTitleLabel.font = self.pieChartConfiguration.itemTitleFont;
 
-    self.itemPercentageLabel.text = [NSString stringWithFormat:@"%.2f%@", self.pieChartConfiguration.selectedItem.percentage, @"%"];
     self.itemPercentageLabel.textColor = self.pieChartConfiguration.itemPercentageColor;
     self.itemPercentageLabel.font = self.pieChartConfiguration.itemPercentageFont;
+
+    [self updateItemSelection];
 }
 
 - (void)updateItemSelection {
     self.itemTitleLabel.text = self.pieChartConfiguration.selectedItem.itemTitle;
     self.itemPercentageLabel.text = [NSString stringWithFormat:@"%.2f%@", self.pieChartConfiguration.selectedItem.percentage, @"%"];
     [self.componentsScrollView selectionWasChanged];
+    self.allStocksView.allStocks = self.pieChartConfiguration.selectedItem.stocks;
 }
 
 @end

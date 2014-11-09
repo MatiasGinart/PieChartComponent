@@ -37,10 +37,14 @@
 
 - (void)drawRect:(CGRect)rect {
     
-    CGFloat lastAngle = 0;
     //Big circle
-    for (NSUInteger index = 0; index < self.configuration.items.count; index++) {
-        PieChartItem* item = self.configuration.items[index];
+    NSUInteger selectedItemIndex = [self.configuration.items indexOfObject:self.configuration.selectedItem];
+    NSArray *sortedArray = [self.configuration.items subarrayWithRange:NSMakeRange(selectedItemIndex, self.configuration.items.count-selectedItemIndex)];
+    sortedArray = [sortedArray arrayByAddingObjectsFromArray:[self.configuration.items subarrayWithRange:NSMakeRange(0, selectedItemIndex)]];
+    
+    CGFloat lastAngle = -M_PI/2 - self.configuration.selectedItem.percentage*M_PI;
+    for (NSUInteger index = 0; index < sortedArray.count; index++) {
+        PieChartItem* item = sortedArray[index];
         
         //Colors settings
         CGContextRef context = UIGraphicsGetCurrentContext();
@@ -70,8 +74,8 @@
     }
 
     //Small circle
-    for (NSUInteger index = 0; index < self.configuration.items.count; index++) {
-        PieChartItem* item = self.configuration.items[index];
+    for (NSUInteger index = 0; index < sortedArray.count; index++) {
+        PieChartItem* item = sortedArray[index];
         
         //Colors settings
         CGContextRef context = UIGraphicsGetCurrentContext();

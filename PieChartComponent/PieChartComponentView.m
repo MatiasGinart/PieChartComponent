@@ -74,6 +74,7 @@
     self.itemTitleLabel.text = self.pieChartConfiguration.selectedItem.itemTitle;
     self.itemPercentageLabel.text = [NSString stringWithFormat:@"%.2f%@", self.pieChartConfiguration.selectedItem.percentage*100, @"%"];
     [self.componentsScrollView selectionWasChanged];
+    [self.pieChartView selectionWasChanged];
     self.allStocksView.allStocks = self.pieChartConfiguration.selectedItem.stocks;
 }
 

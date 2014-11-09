@@ -17,7 +17,9 @@
     }
     return self;
 }
-
+- (void)selectionWasChanged {
+    [self reloadData];
+}
 - (void)setConfiguration:(PieChartConfiguration *)configuration {
     if (configuration != _configuration) {
         _configuration = configuration;

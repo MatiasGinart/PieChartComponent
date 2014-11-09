@@ -20,6 +20,12 @@ typedef enum {
 @property(nonatomic,assign)CGFloat animationFrequency;
 @property(nonatomic,assign)CGFloat selectedItemSize;
 @property(nonatomic,assign)AnimationState animationState;
+
+//Animation
+@property(nonatomic,assign) CGFloat animationPercentage;
+@property(nonatomic,assign) CGFloat animationDecreasing;
+
+
 @end
 
 
@@ -28,58 +34,69 @@ typedef enum {
 - (instancetype)initWithCoder:(NSCoder *)aDecoder{
     self = [super initWithCoder:aDecoder];
     if (self) {
-        self.animationFrequency = 1/20;
+        self.animationFrequency = 1./20.0;
         self.selectedItemSize = .15;
     }
     return self;
 }
 - (void)selectionWasChanged {
-    [self reloadData];
+//    [self prepareForDeselectAnimation];
+//    self.animationState = AnimationStateDeselecting;
+
+    [self prepareForSelectAnimation];
+    self.animationState = AnimationStateSelecting;
+    [self setNeedsDisplay];
     self.lastSelectedItem = self.configuration.selectedItem;
 }
 - (void)setConfiguration:(PieChartConfiguration *)configuration {
     if (configuration != _configuration) {
         _configuration = configuration;
     }
+    self.lastSelectedItem = configuration.selectedItem;
     [self reloadData];
 }
 
 - (void)reloadData {
     self.animationState = AnimationStateNoAnimaton;
-//    [self deselectSelectedItem];
-//    [self rotate];
-//    [self selectSelectedItem];
     [self setNeedsDisplay];
 }
 
-- (void)animationDeselectionWithPercentageAndDecreasing:(NSArray *)data{
-    NSNumber *percentage = data[0];
-    NSNumber *decreasing = data[1];
-    
-    [self drawItemsWithSelectedPercentageSize:percentage.floatValue];
-    if (percentage.floatValue>0) {
-        percentage = @(percentage.floatValue - decreasing.floatValue);
-        [self performSelector:@selector(animationDeselectionWithPercentageAndDecreasing:) withObject:@[percentage,decreasing] afterDelay:self.animationFrequency];
+- (void)animationDeselection{
+    [self drawItemsWithSelectedPercentageSize:self.animationPercentage > 0?self.animationPercentage:0];
+    NSLog(@"Percentage:%.4f",self.animationPercentage);
+    if (self.animationPercentage>0) {
+        self.animationPercentage -= self.animationDecreasing;
+        [self performSelector:@selector(setNeedsDisplay) withObject:nil afterDelay:self.animationFrequency];
     }
 }
 
-- (void)deselectSelectedItem{
-    CGFloat decreasing = self.selectedItemSize * self.animationFrequency / (self.configuration.animationDuration/4);
-//    [self animationDeselectionWithPercentageAndDecreasing:@[@(self.selectedItemSize),@(decreasing)]];
-    [self drawItemsWithSelectedPercentageSize:.15];
+- (void)prepareForDeselectAnimation{
+    self.animationDecreasing = self.selectedItemSize * self.animationFrequency / (self.configuration.animationDuration/4);
+    self.animationPercentage = self.selectedItemSize;
 }
 
 - (void)rotate{
 
 }
 
-- (void)selectSelectedItem{
+- (void)animationSelection{
+    [self drawItemsWithSelectedPercentageSize:self.animationPercentage < self.selectedItemSize
+     ?self.animationPercentage:self.selectedItemSize];
+    NSLog(@"Percentage:%.4f",self.animationPercentage);
+    if (self.animationPercentage<self.selectedItemSize) {
+        self.animationPercentage += self.animationDecreasing;
+        [self performSelector:@selector(setNeedsDisplay) withObject:nil afterDelay:self.animationFrequency];
+    }
+}
 
+- (void)prepareForSelectAnimation{
+    self.animationDecreasing = self.selectedItemSize * self.animationFrequency / (self.configuration.animationDuration/4);
+    self.animationPercentage = 0;
 }
 
 - (void)drawItemsWithSelectedPercentageSize:(CGFloat)selectedPercentage{
     //Big circle
-    NSUInteger selectedItemIndex = [self.configuration.items indexOfObject:self.configuration.selectedItem];
+    NSUInteger selectedItemIndex = [self.configuration.items indexOfObject:self.lastSelectedItem];
     NSArray *sortedArray = [self.configuration.items subarrayWithRange:NSMakeRange(selectedItemIndex, self.configuration.items.count-selectedItemIndex)];
     sortedArray = [sortedArray arrayByAddingObjectsFromArray:[self.configuration.items subarrayWithRange:NSMakeRange(0, selectedItemIndex)]];
     
@@ -160,7 +177,10 @@ typedef enum {
         }
             break;
         case  AnimationStateDeselecting:{
-            [self deselectSelectedItem];
+            [self animationDeselection];
+        }
+        case  AnimationStateSelecting:{
+            [self animationSelection];
         }
         default:
             break;

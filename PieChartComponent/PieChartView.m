@@ -51,7 +51,11 @@
         
         //Angle settings
         CGFloat radious = self.frame.size.width/2;
-        radious = radious * .75;
+        if ([[self.configuration selectedItem]isEqual:item]) {
+            radious = radious * .85;
+        }else{
+            radious = radious * .725;
+        }
         
         CGFloat toAngle = lastAngle + item.percentage*2*M_PI;
         
@@ -79,7 +83,13 @@
         
         //Angle settings
         CGFloat radious = self.frame.size.width/2;
-        radious = radious * 0.45;
+//        radious = radious * 0.45;
+        if ([[self.configuration selectedItem]isEqual:item]) {
+            radious = radious * .50;
+        }else{
+            radious = radious * .45;
+        }
+
         
         CGFloat toAngle = lastAngle + item.percentage*2*M_PI;
         

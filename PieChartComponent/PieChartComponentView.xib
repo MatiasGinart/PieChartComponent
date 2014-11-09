@@ -36,7 +36,7 @@
                 </scrollView>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="83Z-lc-Q6X" customClass="PieChartView">
                     <rect key="frame" x="0.0" y="50" width="190" height="190"/>
-                    <color key="backgroundColor" red="1" green="0.47244601954799126" blue="0.33173368922994184" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" secondItem="83Z-lc-Q6X" secondAttribute="height" multiplier="1:1" id="mbB-FT-yY3"/>
                     </constraints>

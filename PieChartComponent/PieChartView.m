@@ -8,16 +8,34 @@
 
 #import "PieChartView.h"
 
+typedef enum {
+    AnimationStateDeselecting = 0,
+    AnimationStateRotating,
+    AnimationStateSelecting,
+    AnimationStateNoAnimaton,
+} AnimationState;
+
+@interface PieChartView()
+@property(nonatomic,weak)PieChartItem *lastSelectedItem;
+@property(nonatomic,assign)CGFloat animationFrequency;
+@property(nonatomic,assign)CGFloat selectedItemSize;
+@property(nonatomic,assign)AnimationState animationState;
+@end
+
+
 @implementation PieChartView
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder{
     self = [super initWithCoder:aDecoder];
     if (self) {
+        self.animationFrequency = 1/20;
+        self.selectedItemSize = .15;
     }
     return self;
 }
 - (void)selectionWasChanged {
     [self reloadData];
+    self.lastSelectedItem = self.configuration.selectedItem;
 }
 - (void)setConfiguration:(PieChartConfiguration *)configuration {
     if (configuration != _configuration) {
@@ -27,14 +45,28 @@
 }
 
 - (void)reloadData {
-    [self deselectSelectedItem];
-    [self rotate];
-    [self selectSelectedItem];
+    self.animationState = AnimationStateNoAnimaton;
+//    [self deselectSelectedItem];
+//    [self rotate];
+//    [self selectSelectedItem];
     [self setNeedsDisplay];
 }
 
-- (void)deselectSelectedItem{
+- (void)animationDeselectionWithPercentageAndDecreasing:(NSArray *)data{
+    NSNumber *percentage = data[0];
+    NSNumber *decreasing = data[1];
     
+    [self drawItemsWithSelectedPercentageSize:percentage.floatValue];
+    if (percentage.floatValue>0) {
+        percentage = @(percentage.floatValue - decreasing.floatValue);
+        [self performSelector:@selector(animationDeselectionWithPercentageAndDecreasing:) withObject:@[percentage,decreasing] afterDelay:self.animationFrequency];
+    }
+}
+
+- (void)deselectSelectedItem{
+    CGFloat decreasing = self.selectedItemSize * self.animationFrequency / (self.configuration.animationDuration/4);
+//    [self animationDeselectionWithPercentageAndDecreasing:@[@(self.selectedItemSize),@(decreasing)]];
+    [self drawItemsWithSelectedPercentageSize:.15];
 }
 
 - (void)rotate{
@@ -76,7 +108,6 @@
         CGContextAddLineToPoint(context, self.frame.size.width/2,self.frame.size.height/2);
         CGContextClosePath(context);
         CGContextDrawPath(context,kCGPathFillStroke);
-        NSLog(@"From %.0f to %.0f",lastAngle,toAngle);
         lastAngle = toAngle;
     }
     
@@ -106,7 +137,6 @@
         CGContextAddLineToPoint(context, self.frame.size.width/2,self.frame.size.height/2);
         CGContextClosePath(context);
         CGContextDrawPath(context,kCGPathFillStroke);
-        NSLog(@"From %.0f to %.0f",lastAngle,toAngle);
         lastAngle = toAngle;
     }
     
@@ -124,7 +154,17 @@
 }
 
 - (void)drawRect:(CGRect)rect {
-    [self drawItemsWithSelectedPercentageSize:.15];
+    switch (self.animationState) {
+        case AnimationStateNoAnimaton:{
+            [self drawItemsWithSelectedPercentageSize:self.selectedItemSize];
+        }
+            break;
+        case  AnimationStateDeselecting:{
+            [self deselectSelectedItem];
+        }
+        default:
+            break;
+    }
 }
 
 @end

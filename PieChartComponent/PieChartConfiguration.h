@@ -33,6 +33,9 @@ typedef void (^PieChartChangeSelectionCallback)(PieChartConfiguration* pieChartC
 @property (nonatomic, strong) UIColor* itemSectorsTextColor;
 @property (nonatomic, strong) UIFont* itemSectorsTextFont;
 
+@property (nonatomic, assign) CGFloat animationDuration;
+
+
 @property (nonatomic, weak) PieChartItem* selectedItem;
 @property (nonatomic, copy) PieChartChangeSelectionCallback selectionCallback;
 

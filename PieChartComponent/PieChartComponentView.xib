@@ -34,7 +34,7 @@
                         <constraint firstAttribute="height" constant="60" id="bs5-aK-Jf8"/>
                     </constraints>
                 </scrollView>
-                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="83Z-lc-Q6X" customClass="PieChartView">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="83Z-lc-Q6X" customClass="PieChartView">
                     <rect key="frame" x="0.0" y="50" width="190" height="190"/>
                     <color key="backgroundColor" red="1" green="0.47244601954799126" blue="0.33173368922994184" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>

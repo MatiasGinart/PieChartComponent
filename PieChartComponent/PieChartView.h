@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PieChartConfiguration.h"
 
 @interface PieChartView : UIView
+
+@property (nonatomic, strong) PieChartConfiguration* configuration;
+
+- (void)selectionWasChanged;
 
 @end

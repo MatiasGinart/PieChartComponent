@@ -54,6 +54,7 @@
 - (void)configureWithPieChartConfiguration {
     self.componentsScrollView.configuration = self.pieChartConfiguration;
     self.allStocksView.configuration = self.pieChartConfiguration;
+    self.pieChartView.configuration = self.pieChartConfiguration;
 
     self.topView.backgroundColor = self.pieChartConfiguration.topViewColor;
     self.pieChartComponentTitleLabel.textColor = self.pieChartConfiguration.topTextColor;
@@ -71,7 +72,7 @@
 
 - (void)updateItemSelection {
     self.itemTitleLabel.text = self.pieChartConfiguration.selectedItem.itemTitle;
-    self.itemPercentageLabel.text = [NSString stringWithFormat:@"%.2f%@", self.pieChartConfiguration.selectedItem.percentage, @"%"];
+    self.itemPercentageLabel.text = [NSString stringWithFormat:@"%.2f%@", self.pieChartConfiguration.selectedItem.percentage*100, @"%"];
     [self.componentsScrollView selectionWasChanged];
     self.allStocksView.allStocks = self.pieChartConfiguration.selectedItem.stocks;
 }

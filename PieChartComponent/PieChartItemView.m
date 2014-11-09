@@ -29,7 +29,7 @@
         CGFloat width = [item.itemTitle sizeWithAttributes:@{NSFontAttributeName:self.titleInfoLabel.font}].width;
         self.textWidthConstraint.constant = width + 1;
         self.titleInfoLabel.text = item.itemTitle;
-        self.percentageLabel.text = [NSString stringWithFormat:@"%.2f%@", item.percentage, @"%"];
+        self.percentageLabel.text = [NSString stringWithFormat:@"%.2f%@", item.percentage*100, @"%"];
     }
 }
 

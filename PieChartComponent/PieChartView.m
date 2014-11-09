@@ -22,9 +22,10 @@ typedef enum {
 @property(nonatomic,assign)AnimationState animationState;
 
 //Animation
-@property(nonatomic,assign) CGFloat animationPercentage;
-@property(nonatomic,assign) CGFloat animationDecreasing;
-
+@property(nonatomic,assign) CGFloat animationSizePercentage;
+@property(nonatomic,assign) CGFloat animationResizing;
+@property(nonatomic,assign) CGFloat animationAngleOffset;
+@property(nonatomic,assign) CGFloat animationChangeAngle;
 
 @end
 
@@ -34,19 +35,27 @@ typedef enum {
 - (instancetype)initWithCoder:(NSCoder *)aDecoder{
     self = [super initWithCoder:aDecoder];
     if (self) {
-        self.animationFrequency = 1./20.0;
+        self.animationFrequency = 1./40.0;
         self.selectedItemSize = .15;
     }
     return self;
 }
 - (void)selectionWasChanged {
-//    [self prepareForDeselectAnimation];
-//    self.animationState = AnimationStateDeselecting;
+    if (![self.lastSelectedItem isEqual:self.configuration.selectedItem]) {
+        
+        //Make Deselection
+        NSTimeInterval delay = 0;
+        [self performSelector:@selector(prepareForDeselectAnimation) withObject:nil afterDelay:delay];
+        
+        //Make Rotation
+        delay = self.configuration.animationDuration/4.0;
+        [self performSelector:@selector(prepareForRotationAnimation) withObject:nil afterDelay:delay];
 
-    [self prepareForSelectAnimation];
-    self.animationState = AnimationStateSelecting;
-    [self setNeedsDisplay];
-    self.lastSelectedItem = self.configuration.selectedItem;
+        //Update last selected item and make Selection
+        delay = self.configuration.animationDuration*3.0/4.0;
+        [self performSelector:@selector(setLastSelectedItem:) withObject:self.configuration.selectedItem afterDelay:delay];
+        [self performSelector:@selector(prepareForSelectAnimation) withObject:nil afterDelay:delay];
+    }
 }
 - (void)setConfiguration:(PieChartConfiguration *)configuration {
     if (configuration != _configuration) {
@@ -62,45 +71,79 @@ typedef enum {
 }
 
 - (void)animationDeselection{
-    [self drawItemsWithSelectedPercentageSize:self.animationPercentage > 0?self.animationPercentage:0];
-    NSLog(@"Percentage:%.4f",self.animationPercentage);
-    if (self.animationPercentage>0) {
-        self.animationPercentage -= self.animationDecreasing;
+    [self drawItemsWithSelectedPercentageSize:self.animationSizePercentage > 0?self.animationSizePercentage:0 angleOffset:0];
+    if (self.animationSizePercentage>0) {
+        self.animationSizePercentage -= self.animationResizing;
         [self performSelector:@selector(setNeedsDisplay) withObject:nil afterDelay:self.animationFrequency];
     }
 }
 
 - (void)prepareForDeselectAnimation{
-    self.animationDecreasing = self.selectedItemSize * self.animationFrequency / (self.configuration.animationDuration/4);
-    self.animationPercentage = self.selectedItemSize;
+    self.animationResizing = self.selectedItemSize * self.animationFrequency / (self.configuration.animationDuration/4);
+    self.animationSizePercentage = self.selectedItemSize;
+    self.animationState = AnimationStateDeselecting;
+    [self setNeedsDisplay];
 }
 
-- (void)rotate{
+- (CGFloat)finishingAngleOffset{
+    NSUInteger selectedItemIndex = [self.configuration.items indexOfObject:self.lastSelectedItem];
+    
+    NSArray *sortedArray = [self.configuration.items subarrayWithRange:NSMakeRange(selectedItemIndex, self.configuration.items.count-selectedItemIndex)];
+    sortedArray = [sortedArray arrayByAddingObjectsFromArray:[self.configuration.items subarrayWithRange:NSMakeRange(0, selectedItemIndex)]];
 
+    CGFloat angle = - M_PI/2 - self.lastSelectedItem.percentage*M_PI;
+    for (NSUInteger index = 0; index < sortedArray.count; index++) {
+        PieChartItem* item = sortedArray[index];
+        angle += item.percentage*2*M_PI;
+        if ([item isEqual:self.configuration.selectedItem]) {
+            break;
+        }
+    }
+
+    return 2*M_PI;
+}
+
+- (void)animationRotation{
+    [self drawItemsWithSelectedPercentageSize:0 angleOffset:self.animationAngleOffset];
+    NSLog(@"Angle:%.4f",self.animationAngleOffset);
+    self.animationAngleOffset += self.animationChangeAngle;
+    [self performSelector:@selector(setNeedsDisplay) withObject:nil afterDelay:self.animationFrequency];
+}
+
+-(void)prepareForRotationAnimation{
+    self.animationAngleOffset = 0;
+    self.animationChangeAngle = [self finishingAngleOffset] * self.animationFrequency / (self.configuration.animationDuration/2);
+    self.animationState = AnimationStateRotating;
+    NSLog(@"finishing:%.4f",[self finishingAngleOffset]);
+    [self setNeedsDisplay];
 }
 
 - (void)animationSelection{
-    [self drawItemsWithSelectedPercentageSize:self.animationPercentage < self.selectedItemSize
-     ?self.animationPercentage:self.selectedItemSize];
-    NSLog(@"Percentage:%.4f",self.animationPercentage);
-    if (self.animationPercentage<self.selectedItemSize) {
-        self.animationPercentage += self.animationDecreasing;
+    [self drawItemsWithSelectedPercentageSize:self.animationSizePercentage < self.selectedItemSize
+     ?self.animationSizePercentage:self.selectedItemSize angleOffset:0];
+    if (self.animationSizePercentage<self.selectedItemSize) {
+        self.animationSizePercentage += self.animationResizing;
         [self performSelector:@selector(setNeedsDisplay) withObject:nil afterDelay:self.animationFrequency];
     }
 }
 
 - (void)prepareForSelectAnimation{
-    self.animationDecreasing = self.selectedItemSize * self.animationFrequency / (self.configuration.animationDuration/4);
-    self.animationPercentage = 0;
+    //Refactor
+    [[self class]cancelPreviousPerformRequestsWithTarget:self selector:@selector(animationRotation) object:nil];
+
+    self.animationResizing = self.selectedItemSize * self.animationFrequency / (self.configuration.animationDuration/4);
+    self.animationSizePercentage = 0;
+    self.animationState = AnimationStateSelecting;
+    [self setNeedsDisplay];
 }
 
-- (void)drawItemsWithSelectedPercentageSize:(CGFloat)selectedPercentage{
+- (void)drawItemsWithSelectedPercentageSize:(CGFloat)selectedPercentage angleOffset:(CGFloat)angleOffset{
     //Big circle
     NSUInteger selectedItemIndex = [self.configuration.items indexOfObject:self.lastSelectedItem];
     NSArray *sortedArray = [self.configuration.items subarrayWithRange:NSMakeRange(selectedItemIndex, self.configuration.items.count-selectedItemIndex)];
     sortedArray = [sortedArray arrayByAddingObjectsFromArray:[self.configuration.items subarrayWithRange:NSMakeRange(0, selectedItemIndex)]];
     
-    CGFloat lastAngle = -M_PI/2 - self.configuration.selectedItem.percentage*M_PI;
+    CGFloat lastAngle = angleOffset - M_PI/2 - self.lastSelectedItem.percentage*M_PI;
     for (NSUInteger index = 0; index < sortedArray.count; index++) {
         PieChartItem* item = sortedArray[index];
         
@@ -115,7 +158,7 @@ typedef enum {
         
         //Angle settings
         CGFloat radious = self.frame.size.width*.725/2;
-        if ([[self.configuration selectedItem]isEqual:item]) {
+        if ([self.lastSelectedItem isEqual:item]) {
             radious += radious * selectedPercentage;
         }
         
@@ -143,7 +186,7 @@ typedef enum {
         
         //Angle settings
         CGFloat radious = self.frame.size.width*.45/2;
-        if ([[self.configuration selectedItem]isEqual:item]) {
+        if ([self.lastSelectedItem isEqual:item]) {
             radious += radious * selectedPercentage/2;
         }
         
@@ -173,15 +216,21 @@ typedef enum {
 - (void)drawRect:(CGRect)rect {
     switch (self.animationState) {
         case AnimationStateNoAnimaton:{
-            [self drawItemsWithSelectedPercentageSize:self.selectedItemSize];
+            [self drawItemsWithSelectedPercentageSize:self.selectedItemSize angleOffset:0];
         }
             break;
         case  AnimationStateDeselecting:{
             [self animationDeselection];
         }
+            break;
         case  AnimationStateSelecting:{
             [self animationSelection];
         }
+            break;
+        case  AnimationStateRotating:{
+            [self animationRotation];
+        }
+            break;
         default:
             break;
     }

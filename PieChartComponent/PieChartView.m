@@ -2,7 +2,7 @@
 //  PieChartView.m
 //  PieChartComponent
 //
-//  Created by Matías Ginart on 11/5/14.
+//  Created by Exequiel Banga on 11/5/14.
 //  Copyright (c) 2014 Casa. All rights reserved.
 //
 
@@ -33,6 +33,18 @@ typedef enum {
 
 @implementation PieChartView
 
+#pragma mark - init
+- (instancetype)initWithCoder:(NSCoder *)aDecoder{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        self.animationFrequency = 1./40.0;
+        self.selectedItemSize = .15;
+        self.backgroundColor = [UIColor clearColor];
+    }
+    return self;
+}
+
+#pragma mark - Angles calcs
 - (CGFloat)percentToRadians:(CGFloat)percent{
     return percent*2*M_PI;
 }
@@ -71,15 +83,7 @@ typedef enum {
     return -[self degreesToRadians:totalAngle];
 }
 
-- (instancetype)initWithCoder:(NSCoder *)aDecoder{
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        self.animationFrequency = 1./40.0;
-        self.selectedItemSize = .15;
-        self.backgroundColor = [UIColor clearColor];
-    }
-    return self;
-}
+#pragma mark - Setup
 - (void)selectionWasChanged {
     if (![self.lastSelectedItem isEqual:self.configuration.selectedItem]) {
         
@@ -105,6 +109,8 @@ typedef enum {
     self.animationState = AnimationStateNoAnimaton;
     [self setNeedsDisplay];
 }
+
+#pragma mark - Animation
 
 - (void)animationDeselection{
     [self drawItemsWithSelectedPercentageSize:self.animationSizePercentage > 0?self.animationSizePercentage:0 angleOffset:0];
@@ -158,6 +164,8 @@ typedef enum {
     self.animationState = AnimationStateSelecting;
     [self setNeedsDisplay];
 }
+
+#pragma mark - Drawing
 
 - (void)drawItemsWithSelectedPercentageSize:(CGFloat)selectedPercentage angleOffset:(CGFloat)angleOffset{
     //Big circle

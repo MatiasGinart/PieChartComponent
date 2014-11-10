@@ -2,7 +2,7 @@
 //  AllStocksView.m
 //  PieChartComponent
 //
-//  Created by Matías Ginart on 11/8/14.
+//  Created by Exequiel Banga on 11/8/14.
 //  Copyright (c) 2014 Casa. All rights reserved.
 //
 

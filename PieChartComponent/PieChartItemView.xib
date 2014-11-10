@@ -11,10 +11,10 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Hb7-PT-VE1">
-                    <rect key="frame" x="5" y="20" width="20" height="20"/>
+                    <rect key="frame" x="5" y="24" width="12" height="12"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="20" id="8p3-qK-Zqf"/>
-                        <constraint firstAttribute="width" constant="20" id="xP2-84-hM1"/>
+                        <constraint firstAttribute="height" constant="12" id="8p3-qK-Zqf"/>
+                        <constraint firstAttribute="width" constant="12" id="xP2-84-hM1"/>
                     </constraints>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10.47%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="147" translatesAutoresizingMaskIntoConstraints="NO" id="BEA-33-iTs">
@@ -46,7 +46,7 @@
                 <constraint firstItem="BEA-33-iTs" firstAttribute="leading" secondItem="H6e-FN-20p" secondAttribute="leading" id="n4r-y0-Q7i"/>
                 <constraint firstItem="BEA-33-iTs" firstAttribute="width" secondItem="H6e-FN-20p" secondAttribute="width" id="omL-J3-gNG"/>
                 <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="H6e-FN-20p" secondAttribute="trailing" constant="200" id="saz-nu-ctT"/>
-                <constraint firstItem="H6e-FN-20p" firstAttribute="leading" secondItem="Hb7-PT-VE1" secondAttribute="trailing" constant="8" id="unT-6i-6KG"/>
+                <constraint firstItem="H6e-FN-20p" firstAttribute="leading" secondItem="Hb7-PT-VE1" secondAttribute="trailing" constant="16" id="unT-6i-6KG"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>

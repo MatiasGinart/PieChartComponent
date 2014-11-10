@@ -22,6 +22,11 @@
     return objectToReturn;
 }
 
+- (void)awakeFromNib{
+    [super awakeFromNib];
+    self.roundImageView.layer.cornerRadius = self.roundImageView.frame.size.width/2;
+}
+
 - (void)setItem:(PieChartItem *)item {
     if (item != _item) {
         _item = item;
@@ -42,7 +47,7 @@
     self.titleInfoLabel.font = configuration.itemTitleFont;
     self.percentageLabel.textColor = configuration.itemPercentageColor;
     self.percentageLabel.font = configuration.itemPercentageFont;
-    // ASADO: Cambiar por tintColor con imagen
+    // May you want to chante it by tintColor with an image
     self.roundImageView.backgroundColor = [configuration colorForItem:item];
 
     self.item = item;

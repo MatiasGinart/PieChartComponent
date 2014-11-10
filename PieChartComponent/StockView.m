@@ -20,6 +20,11 @@
 	return objectToReturn;
 }
 
+- (void)awakeFromNib{
+    [super awakeFromNib];
+    self.layer.cornerRadius = self.frame.size.height/2.5;
+}
+
 - (void)setText:(NSString *)text {
 	CGSize size = [text sizeWithAttributes:@{ NSFontAttributeName:self.titleLabel.font }];
 	self.titleLabel.text = text;
@@ -29,7 +34,6 @@
 
 - (void)updateWithConfiguration:(PieChartConfiguration*)configuration {
     self.imageView.tintColor = configuration.itemSectorsColor;
-    //ASADO
     self.imageView.backgroundColor = configuration.itemSectorsColor;
     self.titleLabel.textColor = configuration.itemSectorsTextColor;
     self.titleLabel.font = configuration.itemSectorsTextFont;
@@ -37,7 +41,6 @@
 
 - (void)updateMoreStocksWithConfiguration:(PieChartConfiguration*)configuration {
     self.imageView.tintColor = configuration.itemMoreSectorsColor;
-    //ASADO
     self.imageView.backgroundColor = configuration.itemMoreSectorsColor;
 }
 

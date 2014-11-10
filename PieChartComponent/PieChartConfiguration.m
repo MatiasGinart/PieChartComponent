@@ -33,7 +33,7 @@
         sharedInstance.itemMoreSectorsColor = [UIColor colorWithRed:41.f/255.f green:79.f/255.f blue:206.f/255.f alpha:1];
         sharedInstance.itemSectorsTextColor = [UIColor whiteColor];
         sharedInstance.itemSectorsTextFont = [UIFont systemFontOfSize:12.f];
-        sharedInstance.animationDuration = 4;
+        sharedInstance.animationDuration = 2;
         ;
     });
     return sharedInstance;

@@ -129,9 +129,11 @@ typedef enum {
     [self drawItemsWithSelectedPercentageSize:0 angleOffset:0];
     CGFloat totalChangeAngle = [self totalAngleOffset];
     CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
+    rotationAnimation.fromValue = [NSNumber numberWithFloat:0];
     rotationAnimation.toValue = [NSNumber numberWithFloat:totalChangeAngle];
     rotationAnimation.duration = self.configuration.animationDuration/2;
     [self.layer addAnimation:rotationAnimation forKey:@"rotationAnimation1"];
+    self.layer.transform = CATransform3DMakeRotation(totalChangeAngle, 0, 0, 1);
 }
 
 -(void)prepareForRotationAnimation{
@@ -150,7 +152,9 @@ typedef enum {
 
 - (void)prepareForSelectAnimation{
     [self setLastSelectedItem: self.configuration.selectedItem];
+    [self.layer removeAllAnimations];
     self.layer.transform = CATransform3DIdentity;
+    
     self.animationResizing = self.selectedItemSize * self.animationFrequency / (self.configuration.animationDuration/4);
     self.animationSizePercentage = 0;
     self.animationState = AnimationStateSelecting;

@@ -24,8 +24,9 @@ typedef enum {
 //Animation
 @property(nonatomic,assign) CGFloat animationSizePercentage;
 @property(nonatomic,assign) CGFloat animationResizing;
-
-@property(nonatomic,strong) NSMutableArray *rotationAngles;
+@property(nonatomic,assign) CGFloat animationAngleOffset;
+@property(nonatomic,assign) CGFloat animationChangeAngle;
+@property(nonatomic,assign) CGFloat animationSumAngle;
 
 @end
 
@@ -53,7 +54,6 @@ typedef enum {
     sortedArray = [sortedArray arrayByAddingObjectsFromArray:[self.configuration.items subarrayWithRange:NSMakeRange(0, selectedItemIndex)]];
     
     CGFloat totalAngle = 0;
-    self.rotationAngles = [NSMutableArray new];
     for (NSUInteger index = 0; index < sortedArray.count; index++) {
         PieChartItem* item = sortedArray[index];
         if ([item isEqual:self.lastSelectedItem] || [item isEqual:self.configuration.selectedItem]) {
@@ -91,9 +91,6 @@ typedef enum {
         delay = self.configuration.animationDuration/3.0;
         [self performSelector:@selector(prepareForRotationAnimation) withObject:nil afterDelay:delay];
 
-        //Update last selected item and make Selection
-//        delay = self.configuration.animationDuration*2.0/3.0;
-//        [self performSelector:@selector(prepareForSelectAnimation) withObject:nil afterDelay:delay];
     }
 }
 - (void)setConfiguration:(PieChartConfiguration *)configuration {
@@ -125,37 +122,28 @@ typedef enum {
 }
 
 - (void)animationRotation{
-    [self drawItemsWithSelectedPercentageSize:0 angleOffset:0];
-    CGFloat totalChangeAngle = [self totalAngleOffset];
-    CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
-    rotationAnimation.fromValue = [NSNumber numberWithFloat:0];
-    rotationAnimation.toValue = [NSNumber numberWithFloat:totalChangeAngle];
-    rotationAnimation.duration = self.configuration.animationDuration/3;
-    rotationAnimation.delegate = self;
-    rotationAnimation.removedOnCompletion = YES;
-    [self.layer addAnimation:rotationAnimation forKey:@"rotationAnimation1"];
-    
-//    self.animationState = AnimationStateNoAnimaton;
-//    [self setNeedsDisplay];
-
-}
-
-- (void)animationDidStart:(CAAnimation *)anim{
-}
-
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag{
-    if (flag && self.animationState == AnimationStateRotating) {
-        [self setLastSelectedItem: self.configuration.selectedItem];
-        [self prepareForSelectAnimation];
+    [self drawItemsWithSelectedPercentageSize:0 angleOffset:self.animationAngleOffset];
+    self.animationSumAngle += self.animationChangeAngle;
+    if (fabs(self.animationSumAngle) <= fabs([self totalAngleOffset])) {
+        self.animationAngleOffset += self.animationChangeAngle;
+        [self performSelector:@selector(setNeedsDisplay) withObject:nil afterDelay:self.animationFrequency];
+    }else{
+        //Update last selected item and make Selection
+        [self performSelector:@selector(prepareForSelectAnimation) withObject:nil afterDelay:self.animationFrequency];
     }
 }
 
 -(void)prepareForRotationAnimation{
     self.animationState = AnimationStateRotating;
+    self.animationSumAngle = 0;
+    self.animationAngleOffset = 0;
+    self.animationChangeAngle = [self totalAngleOffset] * self.animationFrequency / (self.configuration.animationDuration/3);
+    self.animationState = AnimationStateRotating;
     [self setNeedsDisplay];
 }
 
 - (void)animationSelection{
+    [self setLastSelectedItem: self.configuration.selectedItem];
     [self drawItemsWithSelectedPercentageSize:self.animationSizePercentage < self.selectedItemSize
      ?self.animationSizePercentage:self.selectedItemSize angleOffset:0];
     if (self.animationSizePercentage<self.selectedItemSize) {
@@ -178,7 +166,6 @@ typedef enum {
     sortedArray = [sortedArray arrayByAddingObjectsFromArray:[self.configuration.items subarrayWithRange:NSMakeRange(0, selectedItemIndex)]];
     
     CGFloat lastAngle = angleOffset - (M_PI + [self percentToRadians:self.lastSelectedItem.percentage])/2;
-    self.rotationAngles = [NSMutableArray new];
     for (NSUInteger index = 0; index < sortedArray.count; index++) {
         PieChartItem* item = sortedArray[index];
         
@@ -198,9 +185,6 @@ typedef enum {
         }
         
         CGFloat toAngle = lastAngle + item.percentage*2*M_PI;
-        
-        [self.rotationAngles addObject:@((toAngle - lastAngle)/2)];
-
         
         CGContextAddArc(context, self.frame.size.width/2,self.frame.size.height/2,radious,lastAngle,toAngle,NO);
         CGContextAddLineToPoint(context, self.frame.size.width/2,self.frame.size.height/2);

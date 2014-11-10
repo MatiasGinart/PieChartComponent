@@ -19,10 +19,13 @@
         sharedInstance.topTextColor = [UIColor colorWithRed:103.f/255.f green:119.f/255.f blue:138.f/255.f alpha:1];
         sharedInstance.topTextFont = [UIFont systemFontOfSize:17.f];
         sharedInstance.componentColors = @[
-                                           [UIColor redColor],
-                                           [UIColor yellowColor],
-                                           [UIColor brownColor],
-                                           [UIColor magentaColor]
+                                           [UIColor colorWithRed:1 green:0 blue:0 alpha:1],
+                                           [UIColor colorWithRed:0 green:1 blue:0 alpha:1],
+                                           [UIColor colorWithRed:0 green:0 blue:1 alpha:1],
+                                           [UIColor colorWithRed:1 green:0 blue:1 alpha:1],
+                                           [UIColor colorWithRed:1 green:1 blue:0 alpha:1],
+                                           [UIColor colorWithRed:0 green:1 blue:1 alpha:1],
+                                           [UIColor colorWithRed:0.2 green:0.5 blue:0.2 alpha:1],
                                            ];
         sharedInstance.itemTitleColor = [UIColor grayColor];
         sharedInstance.selectedItemTitleColor = [UIColor colorWithRed:46.f/255.f green:77.f/255.f blue:105.f/255.f alpha:1];

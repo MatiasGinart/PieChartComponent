@@ -12,10 +12,13 @@
 
 + (NSArray*)mock {
     return @[
-             [self itemWithTitle:@"Technology" stocks:@[@"MSFT", @"GOOG", @"FB", @"TW", @"AMZN", @"EBAY", @"WING", @"ALIN", @"ALE", @"RAUL"] percentage:0.25],
-             [self itemWithTitle:@"Health" stocks:@[@"MSFT", @"GOOG", @"FB", @"TW", @"AMZN", @"EBAY", @"WING", @"ALIN", @"ALE", @"RAUL", @"MSFT", @"GOOG", @"FB", @"TW", @"AMZN", @"EBAY", @"WING", @"ALIN", @"ALE", @"RAUL"] percentage:0.25],
-             [self itemWithTitle:@"Industry" stocks:@[@"MSFT", @"GOOG", @"FB", @"TW", @"AMZN", @"EBAY", @"WING", @"ALIN", @"ALE", @"RAUL"] percentage:0.25],
-             [self itemWithTitle:@"Mongo" stocks:@[@"MSFT", @"GOOG", @"FB", @"TW", @"AMZN", @"EBAY", @"WING", @"ALIN", @"ALE", @"RAUL"] percentage:0.25]
+             [self itemWithTitle:@"Technology" stocks:@[@"MSFT", @"GOOG", @"FB", @"TW", @"AMZN", @"EBAY", @"WING", @"ALIN", @"ALE", @"RAUL"] percentage:0.1],
+             [self itemWithTitle:@"Health" stocks:@[@"MSFT", @"GOOG", @"FB", @"TW", @"AMZN", @"EBAY", @"WING", @"ALIN", @"ALE", @"RAUL", @"MSFT", @"GOOG", @"FB", @"TW", @"AMZN", @"EBAY", @"WING", @"ALIN", @"ALE", @"RAUL"] percentage:0.2],
+             [self itemWithTitle:@"Industry" stocks:@[@"MSFT", @"GOOG", @"FB", @"TW", @"AMZN", @"EBAY", @"WING", @"ALIN", @"ALE", @"RAUL"] percentage:0.15],
+             [self itemWithTitle:@"Sports" stocks:@[@"MSFT", @"GOOG", @"FB", @"TW", @"AMZN", @"EBAY", @"WING", @"ALIN", @"ALE", @"RAUL"] percentage:0.15],
+             [self itemWithTitle:@"Home" stocks:@[@"MSFT", @"GOOG", @"FB", @"TW", @"AMZN", @"EBAY", @"WING", @"ALIN", @"ALE", @"RAUL"] percentage:0.25],
+             [self itemWithTitle:@"Mobile" stocks:@[@"MSFT", @"GOOG", @"FB", @"TW", @"AMZN", @"EBAY", @"WING", @"ALIN", @"ALE", @"RAUL"] percentage:0.075],
+             [self itemWithTitle:@"Oil" stocks:@[@"MSFT", @"GOOG", @"FB", @"TW", @"AMZN", @"EBAY", @"WING", @"ALIN", @"ALE", @"RAUL"] percentage:0.075],
              ];
 }
 

@@ -89,11 +89,11 @@ typedef enum {
         [self performSelector:@selector(prepareForDeselectAnimation) withObject:nil afterDelay:delay];
         
         //Make Rotation
-        delay = self.configuration.animationDuration/4.0;
+        delay = self.configuration.animationDuration/3.0;
         [self performSelector:@selector(prepareForRotationAnimation) withObject:nil afterDelay:delay];
 
         //Update last selected item and make Selection
-        delay = self.configuration.animationDuration*3.0/4.0;
+        delay = self.configuration.animationDuration*2.0/3.0;
         [self performSelector:@selector(prepareForSelectAnimation) withObject:nil afterDelay:delay];
     }
 }
@@ -119,7 +119,7 @@ typedef enum {
 }
 
 - (void)prepareForDeselectAnimation{
-    self.animationResizing = self.selectedItemSize * self.animationFrequency / (self.configuration.animationDuration/4);
+    self.animationResizing = self.selectedItemSize * self.animationFrequency / (self.configuration.animationDuration/3);
     self.animationSizePercentage = self.selectedItemSize;
     self.animationState = AnimationStateDeselecting;
     [self setNeedsDisplay];
@@ -131,7 +131,7 @@ typedef enum {
     CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform.rotation.z"];
     rotationAnimation.fromValue = [NSNumber numberWithFloat:0];
     rotationAnimation.toValue = [NSNumber numberWithFloat:totalChangeAngle];
-    rotationAnimation.duration = self.configuration.animationDuration/2;
+    rotationAnimation.duration = self.configuration.animationDuration/3;
     [self.layer addAnimation:rotationAnimation forKey:@"rotationAnimation1"];
     self.layer.transform = CATransform3DMakeRotation(totalChangeAngle, 0, 0, 1);
 }
@@ -155,7 +155,7 @@ typedef enum {
     [self.layer removeAllAnimations];
     self.layer.transform = CATransform3DIdentity;
     
-    self.animationResizing = self.selectedItemSize * self.animationFrequency / (self.configuration.animationDuration/4);
+    self.animationResizing = self.selectedItemSize * self.animationFrequency / (self.configuration.animationDuration/3);
     self.animationSizePercentage = 0;
     self.animationState = AnimationStateSelecting;
     [self setNeedsDisplay];

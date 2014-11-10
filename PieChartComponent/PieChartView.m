@@ -66,8 +66,7 @@ typedef enum {
         }
     }
     if (totalAngle > 180) {
-        totalAngle -= 180;
-        totalAngle *=-1;
+        totalAngle -= 360;
     }
     return -[self degreesToRadians:totalAngle];
 }
@@ -93,8 +92,8 @@ typedef enum {
         [self performSelector:@selector(prepareForRotationAnimation) withObject:nil afterDelay:delay];
 
         //Update last selected item and make Selection
-        delay = self.configuration.animationDuration*2.0/3.0;
-        [self performSelector:@selector(prepareForSelectAnimation) withObject:nil afterDelay:delay];
+//        delay = self.configuration.animationDuration*2.0/3.0;
+//        [self performSelector:@selector(prepareForSelectAnimation) withObject:nil afterDelay:delay];
     }
 }
 - (void)setConfiguration:(PieChartConfiguration *)configuration {
@@ -132,8 +131,18 @@ typedef enum {
     rotationAnimation.fromValue = [NSNumber numberWithFloat:0];
     rotationAnimation.toValue = [NSNumber numberWithFloat:totalChangeAngle];
     rotationAnimation.duration = self.configuration.animationDuration/3;
+    rotationAnimation.delegate = self;
+    rotationAnimation.removedOnCompletion = YES;
     [self.layer addAnimation:rotationAnimation forKey:@"rotationAnimation1"];
-    self.layer.transform = CATransform3DMakeRotation(totalChangeAngle, 0, 0, 1);
+}
+
+- (void)animationDidStart:(CAAnimation *)anim{
+}
+
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag{
+    if (flag && self.animationState == AnimationStateRotating) {
+        [self prepareForSelectAnimation];
+    }
 }
 
 -(void)prepareForRotationAnimation{

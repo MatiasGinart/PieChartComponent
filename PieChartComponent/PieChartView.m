@@ -134,6 +134,10 @@ typedef enum {
     rotationAnimation.delegate = self;
     rotationAnimation.removedOnCompletion = YES;
     [self.layer addAnimation:rotationAnimation forKey:@"rotationAnimation1"];
+    
+//    self.animationState = AnimationStateNoAnimaton;
+//    [self setNeedsDisplay];
+
 }
 
 - (void)animationDidStart:(CAAnimation *)anim{
@@ -141,6 +145,7 @@ typedef enum {
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag{
     if (flag && self.animationState == AnimationStateRotating) {
+        [self setLastSelectedItem: self.configuration.selectedItem];
         [self prepareForSelectAnimation];
     }
 }
@@ -160,10 +165,6 @@ typedef enum {
 }
 
 - (void)prepareForSelectAnimation{
-    [self setLastSelectedItem: self.configuration.selectedItem];
-    [self.layer removeAllAnimations];
-    self.layer.transform = CATransform3DIdentity;
-    
     self.animationResizing = self.selectedItemSize * self.animationFrequency / (self.configuration.animationDuration/3);
     self.animationSizePercentage = 0;
     self.animationState = AnimationStateSelecting;

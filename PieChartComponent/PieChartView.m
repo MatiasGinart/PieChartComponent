@@ -50,105 +50,19 @@ typedef enum {
     [self addGestureRecognizer:tapRecognizer];
 }
 
-- (CGFloat)radiansFromPoint:(CGPoint)point{
-    CGFloat radian;
-    if (point.y >= 0) {
-        radian = atan2f(point.y, point.x);
-    }else{
-        radian =  atan2f(point.y, point.x)+2*M_PI;
-    }
-    
-    //Clockwise change
-    radian = 2*M_PI-radian;
-    return radian;
-}
-
+#pragma mark - Actions
 -(void)viewTapped:(UITapGestureRecognizer *)gesture{
     CGPoint point = [gesture locationInView:self];
+    //Set the point into the right coordinates
     point = CGPointMake(point.x-self.frame.size.width/2, (self.frame.size.height/2)-point.y);
     CGFloat angle = [self radiansFromPoint:point];
     PieChartItem *item = [self itemForAngleInRadians:angle];
-    
-    NSLog(@"%@",item.itemTitle);
-}
-
-
-#pragma mark - Angles calcs
-- (CGFloat)percentToRadians:(CGFloat)percent{
-    return percent*2*M_PI;
-}
-- (CGFloat)percentToDegrees:(CGFloat)percent{
-    return percent*360;
-}
-- (CGFloat)radiansToDegrees:(CGFloat)radians{
-    return radians*180/M_PI;
-}
-
-- (CGFloat)degreesToRadians:(CGFloat)degrees{
-    return degrees*M_PI/180;
-}
-
-- (CGFloat)totalAngleOffset{
-    //Chequear lasitem vs configuration.item
-    NSUInteger selectedItemIndex = [self.configuration.items indexOfObject:self.lastSelectedItem];
-    NSArray *sortedArray = [self.configuration.items subarrayWithRange:NSMakeRange(selectedItemIndex, self.configuration.items.count-selectedItemIndex)];
-    sortedArray = [sortedArray arrayByAddingObjectsFromArray:[self.configuration.items subarrayWithRange:NSMakeRange(0, selectedItemIndex)]];
-    
-    CGFloat totalAngle = 0;
-    for (NSUInteger index = 0; index < sortedArray.count; index++) {
-        PieChartItem* item = sortedArray[index];
-        if ([item isEqual:self.lastSelectedItem] || [item isEqual:self.configuration.selectedItem]) {
-            totalAngle += [self percentToDegrees:item.percentage/2];
-            if ([item isEqual:self.configuration.selectedItem]) {
-                break;
-            }
-        }else{
-            totalAngle += [self percentToDegrees:item.percentage];
-        }
-    }
-    if (totalAngle > 180) {
-        totalAngle -= 360;
-    }
-    return -[self degreesToRadians:totalAngle];
-}
-
-//Parameters must be in radians
-- (BOOL)angle:(CGFloat )angle isInRangeFrom:(CGFloat)from to:(CGFloat)to{
-    CGFloat angleNormalized = angle > 0 ? angle: angle + 2*M_PI;
-    CGFloat fromNormalized = from > 0 ? from: from + 2*M_PI;
-    CGFloat toNormalized = to > 0 ? to: to + 2*M_PI;
-    //One cycle completed
-    if(fromNormalized > toNormalized){
-        fromNormalized -= 2*M_PI;
-    }
-    NSLog(@"Buscando:%.2f, from:%.2f, to:%.2f",angleNormalized,fromNormalized,toNormalized);
-    return fromNormalized <= angleNormalized && toNormalized >= angleNormalized;
-}
-
-- (PieChartItem *)itemForAngleInRadians:(CGFloat)radians{
-    CGFloat radiansWithOffset = radians;// - (M_PI + [self percentToRadians:self.lastSelectedItem.percentage])/2;
-    
-    NSUInteger selectedItemIndex = [self.configuration.items indexOfObject:self.lastSelectedItem];
-    NSArray *sortedArray = [self.configuration.items subarrayWithRange:NSMakeRange(selectedItemIndex, self.configuration.items.count-selectedItemIndex)];
-    sortedArray = [sortedArray arrayByAddingObjectsFromArray:[self.configuration.items subarrayWithRange:NSMakeRange(0, selectedItemIndex)]];
-    
-    CGFloat fromAngle = - (M_PI + [self percentToRadians:self.lastSelectedItem.percentage])/2;;
-    for (NSUInteger index = 0; index < sortedArray.count; index++) {
-        PieChartItem* item = sortedArray[index];
-        CGFloat toAngle = fromAngle + [self percentToRadians:item.percentage];
-        
-        if ([self angle:radiansWithOffset isInRangeFrom:fromAngle to:toAngle]) {
-            return item;
-        }
-        fromAngle = toAngle;
-    }
-    return nil;
+    self.configuration.selectedItem = item;
 }
 
 #pragma mark - Setup
 - (void)selectionWasChanged {
     if (![self.lastSelectedItem isEqual:self.configuration.selectedItem]) {
-        
         //Make Deselection
         NSTimeInterval delay = 0;
         [self performSelector:@selector(prepareForDeselectAnimation) withObject:nil afterDelay:delay];
@@ -156,7 +70,6 @@ typedef enum {
         //Make Rotation
         delay = self.configuration.animationDuration/3.0;
         [self performSelector:@selector(prepareForRotationAnimation) withObject:nil afterDelay:delay];
-
     }
 }
 - (void)setConfiguration:(PieChartConfiguration *)configuration {
@@ -173,7 +86,6 @@ typedef enum {
 }
 
 #pragma mark - Animation
-
 - (void)animationDeselection{
     [self drawItemsWithSelectedPercentageSize:self.animationSizePercentage > 0?self.animationSizePercentage:0 angleOffset:0];
     if (self.animationSizePercentage>0) {
@@ -211,7 +123,6 @@ typedef enum {
 }
 
 - (void)animationSelection{
-    [self setLastSelectedItem: self.configuration.selectedItem];
     [self drawItemsWithSelectedPercentageSize:self.animationSizePercentage < self.selectedItemSize
      ?self.animationSizePercentage:self.selectedItemSize angleOffset:0];
     if (self.animationSizePercentage<self.selectedItemSize) {
@@ -221,6 +132,8 @@ typedef enum {
 }
 
 - (void)prepareForSelectAnimation{
+    [self setLastSelectedItem: self.configuration.selectedItem];
+
     self.animationResizing = self.selectedItemSize * self.animationFrequency / (self.configuration.animationDuration/3);
     self.animationSizePercentage = 0;
     self.animationState = AnimationStateSelecting;
@@ -228,7 +141,6 @@ typedef enum {
 }
 
 #pragma mark - Drawing
-
 - (void)drawItemsWithSelectedPercentageSize:(CGFloat)selectedPercentage angleOffset:(CGFloat)angleOffset{
     //Big circle
     NSUInteger selectedItemIndex = [self.configuration.items indexOfObject:self.lastSelectedItem];
@@ -326,6 +238,95 @@ typedef enum {
         default:
             break;
     }
+}
+
+#pragma mark - Angles calcs 
+//We can make a math class with this
+- (CGFloat)radiansFromPoint:(CGPoint)point{
+    CGFloat radian;
+    if (point.y >= 0) {
+        radian = atan2f(point.y, point.x);
+    }else{
+        radian =  atan2f(point.y, point.x)+2*M_PI;
+    }
+    
+    //Clockwise change
+    radian = 2*M_PI-radian;
+    return radian;
+}
+
+- (CGFloat)percentToRadians:(CGFloat)percent{
+    return percent*2*M_PI;
+}
+- (CGFloat)percentToDegrees:(CGFloat)percent{
+    return percent*360;
+}
+- (CGFloat)radiansToDegrees:(CGFloat)radians{
+    return radians*180/M_PI;
+}
+
+- (CGFloat)degreesToRadians:(CGFloat)degrees{
+    return degrees*M_PI/180;
+}
+
+- (CGFloat)totalAngleOffset{
+    //Chequear lasitem vs configuration.item
+    NSUInteger selectedItemIndex = [self.configuration.items indexOfObject:self.lastSelectedItem];
+    NSArray *sortedArray = [self.configuration.items subarrayWithRange:NSMakeRange(selectedItemIndex, self.configuration.items.count-selectedItemIndex)];
+    sortedArray = [sortedArray arrayByAddingObjectsFromArray:[self.configuration.items subarrayWithRange:NSMakeRange(0, selectedItemIndex)]];
+    
+    CGFloat totalAngle = 0;
+    for (NSUInteger index = 0; index < sortedArray.count; index++) {
+        PieChartItem* item = sortedArray[index];
+        if ([item isEqual:self.lastSelectedItem] || [item isEqual:self.configuration.selectedItem]) {
+            totalAngle += [self percentToDegrees:item.percentage/2];
+            if ([item isEqual:self.configuration.selectedItem]) {
+                break;
+            }
+        }else{
+            totalAngle += [self percentToDegrees:item.percentage];
+        }
+    }
+    if (totalAngle > 180) {
+        totalAngle -= 360;
+    }
+    return -[self degreesToRadians:totalAngle];
+}
+
+//Parameters must be in radians
+- (BOOL)angle:(CGFloat )angle isInRangeFrom:(CGFloat)from to:(CGFloat)to{
+    
+    CGFloat angleNormalized = angle > 0 ? angle: angle + 2*M_PI;
+    CGFloat fromNormalized = from > 0 ? from: from + 2*M_PI;
+    CGFloat toNormalized = to > 0 ? to: to + 2*M_PI;
+    //One cycle completed
+    if(toNormalized < fromNormalized){
+        if (angleNormalized < toNormalized) {
+            angleNormalized += 2*M_PI;
+        }
+        toNormalized += 2*M_PI;
+    }
+    return fromNormalized <= angleNormalized && toNormalized >= angleNormalized;
+}
+
+- (PieChartItem *)itemForAngleInRadians:(CGFloat)radians{
+    CGFloat radiansWithOffset = radians;// - (M_PI + [self percentToRadians:self.lastSelectedItem.percentage])/2;
+    
+    NSUInteger selectedItemIndex = [self.configuration.items indexOfObject:self.lastSelectedItem];
+    NSArray *sortedArray = [self.configuration.items subarrayWithRange:NSMakeRange(selectedItemIndex, self.configuration.items.count-selectedItemIndex)];
+    sortedArray = [sortedArray arrayByAddingObjectsFromArray:[self.configuration.items subarrayWithRange:NSMakeRange(0, selectedItemIndex)]];
+    
+    CGFloat fromAngle = - (M_PI + [self percentToRadians:self.lastSelectedItem.percentage])/2;;
+    for (NSUInteger index = 0; index < sortedArray.count; index++) {
+        PieChartItem* item = sortedArray[index];
+        CGFloat toAngle = fromAngle + [self percentToRadians:item.percentage];
+        
+        if ([self angle:radiansWithOffset isInRangeFrom:fromAngle to:toAngle]) {
+            return item;
+        }
+        fromAngle = toAngle;
+    }
+    return nil;
 }
 
 @end

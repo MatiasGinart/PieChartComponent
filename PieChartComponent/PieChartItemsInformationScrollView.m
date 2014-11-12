@@ -41,6 +41,7 @@
         [viewToAdd updateWithConfiguration:self.configuration item:item];
         CGSize size = [viewToAdd systemLayoutSizeFittingSize:CGSizeMake(7000.f, self.frame.size.height)];
         viewToAdd.frame = CGRectMake(xOrigin, 0, size.width, self.frame.size.height);
+        viewToAdd.autoresizingMask = UIViewAutoresizingNone;
 
         UITapGestureRecognizer* tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(viewTapped:)];
         [viewToAdd addGestureRecognizer:tapRecognizer];

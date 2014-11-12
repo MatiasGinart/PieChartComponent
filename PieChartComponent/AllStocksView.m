@@ -70,6 +70,7 @@
 		if (index < self.allViews.count) {
 			view = self.allViews[index];
             [view updateWithConfiguration:self.configuration];
+            [view setText:self.allStocks[index]];
 			width = view.frame.size.width;
 		}
 		else {

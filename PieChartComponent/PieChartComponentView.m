@@ -25,6 +25,7 @@
 
 + (instancetype)view {
     PieChartComponentView* objectToReturn = [[NSBundle mainBundle] loadNibNamed:@"PieChartComponentView" owner:nil options:nil][0];
+    objectToReturn.frame = CGRectMake(0, 0, 300, 320);
     return objectToReturn;
 }
 

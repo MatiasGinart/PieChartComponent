@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="PieChartComponentView">
-            <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="418"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U2K-lW-Ko7">
-                    <rect key="frame" x="0.0" y="0.0" width="300" height="50"/>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U2K-lW-Ko7">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SECTORIZATION" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="WDc-R7-LbX">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SECTORIZATION" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="WDc-R7-LbX">
                             <rect key="frame" x="21" y="18" width="153" height="24"/>
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -23,86 +22,40 @@
                         </label>
                     </subviews>
                     <color key="backgroundColor" red="0.72991130848698815" green="0.90816805330620065" blue="0.91397617403314912" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstItem="WDc-R7-LbX" firstAttribute="leading" secondItem="U2K-lW-Ko7" secondAttribute="leading" constant="21" id="4Mw-w1-Imb"/>
-                        <constraint firstAttribute="bottom" secondItem="WDc-R7-LbX" secondAttribute="bottom" constant="8" id="ido-9v-BKZ"/>
-                        <constraint firstAttribute="height" constant="50" id="ptd-0X-a53"/>
-                    </constraints>
                 </view>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="250" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E9J-iC-2GV" customClass="PieChartItemsInformationScrollView">
-                    <rect key="frame" x="0.0" y="240" width="300" height="60"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="60" id="bs5-aK-Jf8"/>
-                    </constraints>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="250" fixedFrame="YES" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E9J-iC-2GV" customClass="PieChartItemsInformationScrollView">
+                    <rect key="frame" x="0.0" y="358" width="320" height="60"/>
                 </scrollView>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="83Z-lc-Q6X" customClass="PieChartView">
-                    <rect key="frame" x="0.0" y="50" width="190" height="190"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="width" secondItem="83Z-lc-Q6X" secondAttribute="height" multiplier="1:1" id="mbB-FT-yY3"/>
-                    </constraints>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="83Z-lc-Q6X" customClass="PieChartView">
+                    <rect key="frame" x="72" y="124" width="176" height="176"/>
+                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Technology" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bge-ox-ZMk">
-                    <rect key="frame" x="190" y="64" width="100" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Technology" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bge-ox-ZMk">
+                    <rect key="frame" x="8" y="64" width="304" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10.47%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tiu-yK-rkQ">
-                    <rect key="frame" x="190" y="85" width="100" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="10.47%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tiu-yK-rkQ">
+                    <rect key="frame" x="8" y="85" width="304" height="21"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ksU-s1-uhT">
-                    <rect key="frame" x="0.0" y="239" width="300" height="1"/>
+                <view alpha="0.69999999999999996" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ksU-s1-uhT">
+                    <rect key="frame" x="0.0" y="295" width="442" height="1"/>
                     <color key="backgroundColor" red="0.82648480662983426" green="0.82648480662983426" blue="0.82648480662983426" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="1" id="eH6-JE-pli"/>
-                    </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dZC-Ex-aQf" customClass="AllStocksView">
-                    <rect key="frame" x="190" y="120" width="110" height="119"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dZC-Ex-aQf" customClass="AllStocksView">
+                    <rect key="frame" x="0.0" y="300" width="320" height="60"/>
+                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-            <constraints>
-                <constraint firstAttribute="bottom" secondItem="E9J-iC-2GV" secondAttribute="bottom" id="1Op-7H-oxJ"/>
-                <constraint firstItem="ksU-s1-uhT" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="3P6-pt-Mvm"/>
-                <constraint firstItem="U2K-lW-Ko7" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="AA0-CU-F1z"/>
-                <constraint firstItem="dZC-Ex-aQf" firstAttribute="top" secondItem="tiu-yK-rkQ" secondAttribute="bottom" constant="14" id="BuZ-zh-FaM"/>
-                <constraint firstItem="ksU-s1-uhT" firstAttribute="top" secondItem="83Z-lc-Q6X" secondAttribute="top" constant="189" id="Cil-ef-5h3"/>
-                <constraint firstItem="83Z-lc-Q6X" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="FAV-X7-6DA"/>
-                <constraint firstItem="E9J-iC-2GV" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="IJ7-88-PRk"/>
-                <constraint firstItem="E9J-iC-2GV" firstAttribute="top" secondItem="83Z-lc-Q6X" secondAttribute="bottom" id="JBp-LJ-1jU"/>
-                <constraint firstItem="dZC-Ex-aQf" firstAttribute="leading" secondItem="83Z-lc-Q6X" secondAttribute="trailing" id="JzR-75-k95"/>
-                <constraint firstItem="U2K-lW-Ko7" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Kuk-Gu-CXq"/>
-                <constraint firstItem="ksU-s1-uhT" firstAttribute="top" secondItem="dZC-Ex-aQf" secondAttribute="bottom" id="N4L-Km-8s0"/>
-                <constraint firstItem="E9J-iC-2GV" firstAttribute="top" secondItem="ksU-s1-uhT" secondAttribute="bottom" id="PQf-eM-fR9"/>
-                <constraint firstItem="bge-ox-ZMk" firstAttribute="leading" secondItem="83Z-lc-Q6X" secondAttribute="trailing" id="PVj-JF-o4i"/>
-                <constraint firstItem="83Z-lc-Q6X" firstAttribute="top" secondItem="U2K-lW-Ko7" secondAttribute="bottom" id="Zpd-sH-a6t"/>
-                <constraint firstAttribute="trailing" secondItem="ksU-s1-uhT" secondAttribute="trailing" id="aTc-ju-TiC"/>
-                <constraint firstItem="tiu-yK-rkQ" firstAttribute="top" secondItem="bge-ox-ZMk" secondAttribute="bottom" id="hal-3c-z1X"/>
-                <constraint firstItem="bge-ox-ZMk" firstAttribute="top" secondItem="U2K-lW-Ko7" secondAttribute="bottom" constant="14" id="hiH-Uu-Xfg"/>
-                <constraint firstItem="tiu-yK-rkQ" firstAttribute="leading" secondItem="bge-ox-ZMk" secondAttribute="leading" id="iBj-UA-fym"/>
-                <constraint firstAttribute="trailing" secondItem="dZC-Ex-aQf" secondAttribute="trailing" id="k3d-37-Of2"/>
-                <constraint firstAttribute="trailing" secondItem="U2K-lW-Ko7" secondAttribute="trailing" id="kMW-q5-gTV"/>
-                <constraint firstItem="tiu-yK-rkQ" firstAttribute="width" secondItem="bge-ox-ZMk" secondAttribute="width" id="l1Q-L7-pn7"/>
-                <constraint firstAttribute="trailing" secondItem="E9J-iC-2GV" secondAttribute="trailing" id="rub-Fj-hrT"/>
-                <constraint firstItem="ksU-s1-uhT" firstAttribute="top" secondItem="83Z-lc-Q6X" secondAttribute="bottom" constant="-1" id="vg0-Nh-FaQ"/>
-                <constraint firstAttribute="trailing" secondItem="bge-ox-ZMk" secondAttribute="trailing" constant="10" id="zhS-lH-faQ"/>
-            </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="Cil-ef-5h3"/>
-                    <exclude reference="PQf-eM-fR9"/>
-                </mask>
-            </variation>
             <connections>
                 <outlet property="allStocksView" destination="dZC-Ex-aQf" id="owb-U7-hG9"/>
                 <outlet property="componentsScrollView" destination="E9J-iC-2GV" id="60m-7d-dxf"/>
@@ -112,7 +65,7 @@
                 <outlet property="pieChartView" destination="83Z-lc-Q6X" id="ha5-SU-o02"/>
                 <outlet property="topView" destination="U2K-lW-Ko7" id="qUw-RK-yO2"/>
             </connections>
-            <point key="canvasLocation" x="-347" y="2"/>
+            <point key="canvasLocation" x="-337" y="61"/>
         </view>
     </objects>
 </document>

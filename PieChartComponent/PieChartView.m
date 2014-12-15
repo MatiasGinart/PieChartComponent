@@ -161,7 +161,7 @@ typedef enum {
         CGContextBeginPath(context);
         
         //Angle settings
-        CGFloat radious = self.frame.size.width*.725/2;
+        CGFloat radious = self.frame.size.width*.85/2;
         if ([self.lastSelectedItem isEqual:item]) {
             radious += radious * selectedPercentage;
         }
@@ -189,7 +189,7 @@ typedef enum {
         CGContextBeginPath(context);
         
         //Angle settings
-        CGFloat radious = self.frame.size.width*.45/2;
+        CGFloat radious = self.frame.size.width*.52/2;
         if ([self.lastSelectedItem isEqual:item]) {
             radious += radious * selectedPercentage/2;
         }
@@ -211,7 +211,7 @@ typedef enum {
     CGContextSetFillColorWithColor(context,[[UIColor whiteColor] CGColor]);
     
     CGFloat radious = self.frame.size.width/2;
-    radious = radious * 0.4;
+    radious = radious * 0.47;
     CGContextAddArc(context, self.frame.size.width/2,self.frame.size.height/2,radious,0,2*M_PI,NO);
     CGContextClosePath(context);
     CGContextDrawPath(context,kCGPathFillStroke);
